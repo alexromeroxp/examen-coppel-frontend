@@ -1,0 +1,9 @@
+<div class="login-container">
+    <h2>Iniciar Sesión</h2>
+    <form (ngSubmit)="login()">
+      <label for="username">Nombre de Usuario:</label>
+      <input id="username" [(ngModel)]="username" name="username" required>
+      <button type="submit">Iniciar Sesión</button>
+    </form>
+  </div>
+  

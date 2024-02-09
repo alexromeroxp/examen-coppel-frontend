@@ -1,0 +1,30 @@
+<div>
+    <h2>Clientes</h2>
+    <ul>
+        <li *ngFor="let cliente of clientes" (click)="seleccionarCliente(cliente)">
+            {{ cliente.nombre }}
+        </li>
+    </ul>
+    <div *ngIf="clienteSeleccionado">
+        <h2>Artículos Disponibles</h2>
+        <ul>
+            <li *ngFor="let articulo of articulosDisponibles" (click)="seleccionarArticulo(articulo)">
+                {{ articulo.descripcion }}
+            </li>
+        </ul>
+
+        <div *ngIf="articuloSeleccionado">
+            <h3>Añadir al Carrito</h3>
+            <p>Artículo: {{ articuloSeleccionado.descripcion }}</p>
+            <label for="cantidad">Cantidad:</label>
+            <input id="cantidad" [(ngModel)]="cantidadSeleccionada" [ngModelOptions]="{standalone: true}" required>
+            <button (click)="agregarAlCarrito()">Añadir al Carrito</button>
+        </div>
+        <h3>Carrito de {{ clienteSeleccionado.nombre }}</h3>
+        <ul>
+            <li *ngFor="let item of clienteSeleccionado.carrito">
+                {{ item.articulo.descripcion }} - Cantidad: {{ item.cantidad }}
+            </li>
+        </ul>
+    </div>
+</div>
