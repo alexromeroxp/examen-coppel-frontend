@@ -1,34 +1,63 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { clientes } from '../mocks/clientes';
-
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Router } from '@angular/router';
+import { Cliente } from '../interfaces/cliente.interface';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private authenticatedUser: string | null = null;
-  private clientes = clientes
-  constructor(private router: Router) { }
+  public authenticatedUser: string | null = null;
+  private apiUrl = "http://localhost:5260/api/Cliente/auth";
+  private currentUserSubject = new BehaviorSubject<any>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
 
-  login(username: string): any {
-    const found = this.clientes.find(cliente => cliente.nombre === username)
-    if (found) {
-      this.authenticatedUser = username;
-      return found
-    }
-    return null
+  constructor(private httpClient: HttpClient, private router: Router) { }
+
+  login(username: string): void {
+    const requestBody = { nombre: username };
+    this.httpClient.post(this.apiUrl, requestBody).subscribe(
+      (result: any) => {
+        if (result) {
+          localStorage.setItem('authenticatedUser', JSON.stringify(result));
+          localStorage.setItem("carrito", result.carrito.length.toString())
+          this.setUserInfo(result);
+          this.router.navigate(['/clientes']);
+        }
+      },
+      (error) => {
+        console.error("Error en la autenticación:", error);
+        alert("Error en la autenticación.");
+      }
+    );
   }
 
   logout(): void {
-    this.authenticatedUser = null;
+    localStorage.removeItem('authenticatedUser');
+    localStorage.removeItem("carrito");
+    this.clearUserInfo();
     this.router.navigate(['/login']);
   }
 
   isAuthenticated(): boolean {
-    return !!this.authenticatedUser;
+    return localStorage.getItem('authenticatedUser') ? true : false;
   }
 
-  getAuthenticatedUser(): string | null {
-    return this.authenticatedUser;
+  getAuthenticatedUser(): any {
+    let storedUser = localStorage.getItem('authenticatedUser');
+    if (storedUser) {
+      return JSON.parse(storedUser) as Cliente
+    }
+    this.router.navigate(["./login"]);
+  }
+  setUserInfo(user: any): void {
+    this.currentUserSubject.next(user);
+  }
+  getUserInfo(): Cliente {
+    return this.currentUserSubject.value;
+  }
+  clearUserInfo(): void {
+    this.currentUserSubject.next(null);
   }
 }

@@ -1,5 +1,6 @@
 export interface Articulo {
-    codigo: number;
+    articuloId:number;
+    codigo: string;
     descripcion: string;
     precio: number;
     imagen: string;

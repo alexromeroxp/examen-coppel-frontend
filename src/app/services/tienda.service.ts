@@ -2,41 +2,43 @@ import { Injectable } from '@angular/core';
 import { Tienda } from '../interfaces/tienda.interface';
 import { tiendas } from '../mocks/tiendas';
 import { Articulo } from '../interfaces/articulo.interface';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TiendaService {
-  private tiendas: Tienda[] = tiendas
+  private apiUrl = "http://localhost:5260/api/Tienda";
+  private apiUrl2 = "http://localhost:5260/api/Articulo/Articulos-Tiendas";
 
-  getTiendas(): Tienda[] {
-    return this.tiendas;
+  constructor(private httpClient: HttpClient) { }
+
+
+  getTiendas(): Observable<Tienda[]> {
+    return this.httpClient.get<Tienda[]>(`${this.apiUrl}`);
   }
 
-  getTienda(sucursal: string): Tienda | undefined {
-    return this.tiendas.find(tienda => tienda.sucursal === sucursal);
+  getTienda(id: number): Observable<Tienda | undefined> {
+    return this.httpClient.get<Tienda>(`${this.apiUrl}/${id}`);
   }
 
-  agregarTienda(tienda: Tienda): void {
-    this.tiendas.push(tienda);
+  crearTienda(tienda: Tienda): Observable<any> {
+    return this.httpClient.post(this.apiUrl, tienda);
   }
 
-  actualizarTienda(tienda: Tienda): void {
-    const index = this.tiendas.findIndex(t => t.sucursal === tienda.sucursal);
-    if (index !== -1) {
-      this.tiendas[index] = tienda;
+  editarTienda(tienda: Tienda): Observable<any> {
+    return this.httpClient.put<any>(`${this.apiUrl}/${tienda.tiendaId}`, tienda);
+  }
+
+  borrarTienda(id: number): Observable<any> {
+    return this.httpClient.delete<any>(`${this.apiUrl}/${id}`);
+  }
+
+  agregarArticuloATienda(tiendaId: number, articuloId: number): Observable<any> {
+    const request = {
+      tiendaId, articuloId, fecha: new Date()
     }
-  }
-
-  eliminarTienda(sucursal: string): any {
-    this.tiendas = this.tiendas.filter(tienda => tienda.sucursal !== sucursal);
-    return this.tiendas
-  }
-
-  agregarArticuloATienda(sucursal: string, articulo: Articulo): void {
-    const tienda = this.getTienda(sucursal);
-    if (tienda) {
-      tienda.articulos.push(articulo);
-    }
+    return this.httpClient.post(this.apiUrl2, request);
   }
 }

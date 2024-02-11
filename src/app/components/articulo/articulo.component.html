@@ -14,14 +14,14 @@
         <p>Precio: {{ articuloSeleccionado.precio | currency }}</p>
         <p>Imagen: {{ articuloSeleccionado.imagen }}</p>
         <p>Stock: {{ articuloSeleccionado.stock }}</p>
-        <button (click)="eliminarArticulo(articuloSeleccionado.codigo)">Eliminar</button>
+        <button (click)="eliminarArticulo(articuloSeleccionado.articuloId)">Eliminar</button>
     </div>
 
     <button *ngIf="mostrarFormularioAgregar" (click)="mostrarFormularioAgregar = false">Minimizar Form</button>
-    <button *ngIf="!mostrarFormularioAgregar" (click)="mostrarFormularioAgregar = true">Agregar Cliente</button>
+    <button *ngIf="!mostrarFormularioAgregar" (click)="mostrarFormularioAgregar = true">Agregar Articulo</button>
     <form *ngIf="mostrarFormularioAgregar" (submit)="agregarArticulo()">
         <label for="codigo">Código:</label>
-        <input id="codigo" type="number" [(ngModel)]="nuevoArticulo.codigo" [ngModelOptions]="{standalone: true}"
+        <input id="codigo" [(ngModel)]="nuevoArticulo.codigo" [ngModelOptions]="{standalone: true}"
             required>
 
         <label for="descripcion">Descripción:</label>

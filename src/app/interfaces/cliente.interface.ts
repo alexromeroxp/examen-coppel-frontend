@@ -1,7 +1,7 @@
 import { Articulo } from "./articulo.interface";
 
 export interface Cliente {
-    id: number;
+    clienteId: number;
     nombre: string;
     direccion: string;
     apellidos: string;

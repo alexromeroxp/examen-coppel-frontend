@@ -17,17 +17,16 @@
         {{ articulo.descripcion }} - Stock: {{ articulo.stock }}
       </li>
     </ul>
-    <button (click)="eliminarTienda(tiendaSeleccionada.sucursal)">Eliminar</button>
+    <button (click)="eliminarTienda(tiendaSeleccionada.tiendaId)">Eliminar</button>
     <button *ngIf="mostrarFormularioAgregarArticulos" (click)="mostrarFormularioAgregarArticulos = false">Minimizar Form</button>
     <button *ngIf="!mostrarFormularioAgregarArticulos" (click)="mostrarFormularioAgregarArticulos = true">Agregar Artículo</button>
   
-    <form *ngIf="mostrarFormularioAgregarArticulos" (submit)="agregarArticulo(tiendaSeleccionada)">
+    <form *ngIf="mostrarFormularioAgregarArticulos" (submit)="agregarArticuloATienda()">
       <label for="articulo">Seleccionar Artículo:</label>
       <select id="articulo" [(ngModel)]="nuevoArticuloSeleccionado" [ngModelOptions]="{standalone: true}" required>
         <option *ngFor="let articulo of articulosDisponibles" [ngValue]="articulo">{{ articulo.descripcion }}</option>
       </select>
   
-      <!-- Puedes ajustar el formulario según tus necesidades, por ejemplo, agregar cantidad, etc. -->
       <label for="cantidad">Cantidad:</label>
       <input id="cantidad" [(ngModel)]="nuevaCantidad" [ngModelOptions]="{standalone: true}" required>
   

@@ -1,34 +1,34 @@
 import { Injectable } from '@angular/core';
 import { Articulo } from '../interfaces/articulo.interface';
-import { articulos } from '../mocks/articulos';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArticuloService {
-  private articulos: Articulo[] = articulos
+  private apiUrl = "http://localhost:5260/api/Articulo";
 
-  getArticulos(): Articulo[] {
-    return this.articulos;
+  constructor(private httpClient: HttpClient) { }
+
+  getArticulos(): Observable<Articulo[]> {
+    return this.httpClient.get<Articulo[]>(`${this.apiUrl}`);
   }
 
-  getArticulo(codigo: number): Articulo | undefined {
-    return this.articulos.find(articulo => articulo.codigo === codigo);
+  getArticulo(id: number): Observable<Articulo | undefined> {
+    return this.httpClient.get<Articulo>(`${this.apiUrl}/${id}`);
   }
 
-  agregarArticulo(articulo: Articulo): void {
-    this.articulos.push(articulo);
+  crearArticulo(articulo: Articulo): Observable<Articulo> {
+    const request = { ...articulo, articuloId: undefined }
+    return this.httpClient.post<Articulo>(`${this.apiUrl}`, articulo);
   }
 
-  actualizarArticulo(articulo: Articulo): void {
-    const index = this.articulos.findIndex(a => a.codigo === articulo.codigo);
-    if (index !== -1) {
-      this.articulos[index] = articulo;
-    }
+  editarArticulo(articulo: Articulo): Observable<any> {
+    return this.httpClient.put<any>(`${this.apiUrl}/${articulo.articuloId}`, articulo);
   }
 
-  eliminarArticulo(codigo: number): any {
-    this.articulos = this.articulos.filter(articulo => articulo.codigo !== codigo);
-    return this.articulos
+  borrarArticulo(id: number): Observable<any> {
+    return this.httpClient.delete<any>(`${this.apiUrl}/${id}`);
   }
 }

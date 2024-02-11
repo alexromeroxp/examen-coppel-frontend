@@ -1,0 +1,19 @@
+<div class="login-container">
+  <h2>Iniciar Sesión</h2>
+  <form (ngSubmit)="login()" class="login-form">
+    <label for="username">Nombre de Usuario:</label>
+    <input id="username" [(ngModel)]="username" name="username" required>
+    <button type="submit">Iniciar Sesión</button>
+  </form>
+  <div class="registered-clients">
+    <div class="red-box">
+      <p>Clientes actualmente registrados:</p>
+      <ul>
+        <li>Cliente1</li>
+        <li>Cliente2</li>
+        <li>Cliente3</li>
+      </ul>
+      <p>Si por alguna razon eliminas a todos los usuarios puedes reiniciar la aplicacion de backend:</p>
+    </div>
+  </div>
+</div>

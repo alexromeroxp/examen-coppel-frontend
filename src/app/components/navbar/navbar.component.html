@@ -1,9 +1,9 @@
 <nav class="navbar">
-    <div class="logo">Mi Empresa</div>
+    <div class="logo">Examen Angular</div>
     <ul class="nav-list">
-        <li>
+        <li *ngIf="authService.isAuthenticated()">
             <i class="fa fa-shopping-cart" style="color: #fff;"></i>
-            {{ numeroArticulosEnCarrito }}
+            {{ authService.getUserInfo().carrito.length }}
         </li>
         <li><a routerLink="/">Inicio</a></li>
         <li *ngIf="authService.isAuthenticated()">
@@ -19,9 +19,11 @@
             <a routerLink="/articulos">Articulos</a>
         </li>
         <li *ngIf="authService.isAuthenticated()">
-            <span>{{ authService.getAuthenticatedUser() }}</span>
-            <button (click)="logout()">Cerrar Sesión</button>
+            <span>{{ authService.getAuthenticatedUser()?.nombre }}</span>
         </li>
+        <button *ngIf="authService.isAuthenticated()" (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
         <li *ngIf="!authService.isAuthenticated()"><a routerLink="/login">Iniciar Sesión</a></li>
     </ul>
 </nav>

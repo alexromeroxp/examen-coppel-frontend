@@ -15,7 +15,7 @@
         <p>Nombre: {{ clienteSeleccionado.nombre }}</p>
         <p>Dirección: {{ clienteSeleccionado.direccion }}</p>
         <p>Teléfono: {{ clienteSeleccionado.apellidos }}</p>
-        <button (click)="eliminarCliente(clienteSeleccionado.id)">Eliminar</button>
+        <button (click)="eliminarCliente(clienteSeleccionado.clienteId)">Eliminar</button>
     </div>
     <button *ngIf="mostrarFormularioAgregar" (click)="mostrarFormularioAgregar = false">Minimizar Form</button>
     <button *ngIf="!mostrarFormularioAgregar" (click)="mostrarFormularioAgregar = true">Agregar Cliente</button>
