@@ -1,21 +1,76 @@
-<div class="container">
-    <div class=" instructions-container">
-        <h1>Instrucciones de Instalación</h1>
-        <ol>
-            <li>Descargar ambos repositorios.</li>
-            <li>Tener Angular 16 instalado.</li>
-            <li>Tener .NET Core versión 8 instalado.</li>
-            <li>Instalar las dependencias del proyecto Frontend con <code>npm install</code>.</li>
-            <li>Correr la aplicación Angular con <code>npm start</code>.</li>
-            <li>Compilar la aplicación de .NET Core 8 (Mac o Windows): usar el comando
-                <code>dotnet build (ruta de la app)</code>.
-            </li>
-            <li>Correr la aplicación de .NET Core 8 (Mac o Windows): usar el comando
-                <code>dotnet run (ruta de la app)</code>.
-            </li>
-            <li>Nota: También puedes usar Visual Studio para correr la aplicación.</li>
-            <li>Listo :)</li>
-        </ol>
-    </div>
-
-</div>
+<div class="container mt-4">
+    <h2>Examen Coppel</h2>
+  
+    <div class="mb-3">
+      <h4>Necesidad</h4>
+      <p>CRUD Arquitecto de Software</p>
+      <ul>
+        <li>Se requiere la generación de pólizas de faltantes, dichas pólizas deben restarse a la cantidad del inventario y ser cargadas a un empleado.</li>
+        <li>Permitir eliminar pólizas que ya no son necesarias.</li>
+        <li>Actualizar los datos del empleado en la póliza en caso de registrarlas con algún error.</li>
+        <li>Generar log para conocer el flujo en caso de algún fallo.</li>
+      </ul>
+      <h4>Supuesto</h4>
+      <ul>
+        <li>Este servicio se debe desplegar de manera centralizada.</li>
+        <li>La base de datos donde se realizarán los grabados para este ejercicio es utilizada por una gran cantidad de procesos que transaccionan, consultan, abren y cierran conexiones, etc.</li>
+        <li>La base de datos es central, toda la operación usa esta única base de datos.</li>
+      </ul>
+      <h4>Puntos Técnicos</h4>
+      <ul>
+        <li><strong>Diseñar solución de Arquitectura:</strong></li>
+        <ul>
+          <li>Listado de impacto: Componentes de los cuales se compondrá la solución así como sus características técnicas.</li>
+          <li>Diagrama Arquitectónico: Ambiente donde vivirá cada una de las soluciones (Front, Back y BD). Características de cada uno de los ambientes necesarios para el funcionamiento de la solución (Software, Hardware). Tipo de solución (ejemplo: si es Centralizada, Regional, Central, Clusterizada, etc.).</li>
+        </ul>
+        <li><strong>Desarrollo de la solución:</strong></li>
+        <ul>
+          <li>FrontEnd: Puede ser en C#, JAVA, Angular. Puedes hacer una APP (opcional). Utilizar la mayor cantidad de controles posibles en pantalla.</li>
+          <li>BackEnd: Desarrollo de servicio web RESTful. Deseable utilizar: SpringBoot + Java 17. Proyecto de Maven. Opcional: RAC (Framework PHP Coppel - Phalcon). Debe considerarse agregar Log. Utilizar JDBCTemplate o similar para la conexión a base de datos y realizar consumo de Procedimientos Almacenados o Funciones dependiendo el motor de base de datos seleccionado. Evitar QUERYS directos hacia la base de datos.</li>
+          <li>Base de Datos: Usar persistencia en BD relacional. Motor de base de dados: SQL Server o PostgreSQL.</li>
+        </ul>
+        <li><strong>Almacenamiento de código fuente y versión:</strong></li>
+        <ul>
+          <li>Subir a Git personal de Coppel.</li>
+        </ul>
+        <li><strong>Documentación Final de Arquitectura:</strong></li>
+        <ul>
+          <li>Diagrama de Secuencia.</li>
+          <li>Diagrama de Datos.</li>
+        </ul>
+      </ul>
+      <h4>Considerar como mínimo los siguientes valores:</h4>
+      <ul>
+        <li>Creación de Tablas</li>
+        <ul>
+          <li>Nombre Tabla: Inventario</li>
+          <ul>
+            <li>Campo 1: SKU</li>
+            <li>Campo 2: Nombre</li>
+            <li>Campo 3: Cantidad</li>
+          </ul>
+          <li>Nombre Tabla: Empleado</li>
+          <ul>
+            <li>Campo 1: IdEmpleado</li>
+            <li>Campo 2: Nombre</li>
+            <li>Campo 3: Apellido</li>
+            <li>Campo 4: Puesto</li>
+          </ul>
+          <li>Nombre Tabla: Polizas</li>
+          <ul>
+            <li>Campo 1: IdPoliza</li>
+            <li>Campo 2: EmpleadoGenero</li>
+            <li>Campo 3: SKU</li>
+            <li>Campo 4: Cantidad</li>
+            <li>Campo 5: Fecha</li>
+          </ul>
+        </ul>
+        <li>Notas:</li>
+        <ul>
+          <li>No puede existir 2 registros con el mismo SKU</li>
+          <li>No puede existir 2 empleados con el mismo ID</li>
+          <li>No puede existir 2 Pólizas con el mismo ID</li>
+        </ul>
+      </ul>
+      <ul>
+       

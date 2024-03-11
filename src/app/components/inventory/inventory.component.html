@@ -1,0 +1,96 @@
+<div class="container mt-4">
+    <h2>Inventario</h2>
+  
+    <div class="mb-3">
+  <h4>Agregar Nuevo Elemento al Inventario</h4>
+  <form (ngSubmit)="addInventory()" #inventoryForm="ngForm">
+
+    <div class="mb-3">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput type="text" id="name" name="name" [(ngModel)]="inventoryItem.name" required>
+      </mat-form-field>
+    </div>
+
+    <div class="mb-3">
+      <mat-form-field appearance="outline">
+        <mat-label>Cantidad</mat-label>
+        <input matInput type="number" id="quantity" name="quantity" [(ngModel)]="inventoryItem.quantity" required>
+      </mat-form-field>
+    </div>
+
+    <!-- Agrega más campos según la información del inventario -->
+
+    <button mat-raised-button color="primary" type="submit">Agregar Elemento al Inventario</button>
+  </form>
+</div>
+
+  
+    <div class="mt-4">
+      <h4>Listado del Inventario</h4>
+      <table mat-table [dataSource]="inventoryItems" class="mat-elevation-z8">
+        <ng-container matColumnDef="sku">
+          <th mat-header-cell *matHeaderCellDef>SKU</th>
+          <td mat-cell *matCellDef="let item">{{ item.sku }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let item">
+            <div [ngSwitch]="item.isEdit">
+              <div *ngSwitchCase="false">{{ item.name }}</div>
+              <div *ngSwitchCase="true">
+                <mat-form-field appearance="outline">
+                  <input matInput [(ngModel)]="item.name" />
+                </mat-form-field>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+          <td mat-cell *matCellDef="let item">
+            <div [ngSwitch]="item.isEdit">
+              <div *ngSwitchCase="false">{{ item.quantity }}</div>
+              <div *ngSwitchCase="true">
+                <mat-form-field appearance="outline">
+                  <input matInput [(ngModel)]="item.quantity" />
+                </mat-form-field>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+  
+        <!-- Agrega más campos según la información del inventario -->
+  
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let item">
+            <div [ngSwitch]="item.isEdit">
+              <div *ngSwitchCase="false">
+                <button mat-icon-button color="warn" (click)="updateInventory(item)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteInventory(item.sku)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="detailInventory(item.sku)">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+              </div>
+              <div *ngSwitchCase="true">
+                <button mat-icon-button color="warn" (click)="doneEditing(item)">
+                  <mat-icon>done</mat-icon>
+                </button>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
+  

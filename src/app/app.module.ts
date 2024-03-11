@@ -4,30 +4,36 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ClientesComponent } from './components/clientes/clientes.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { LoginComponent } from './components/login/login.component';
-import { ArticuloComponent } from './components/articulo/articulo.component';
-import { TiendaComponent } from './components/tienda/tienda.component';
-import { ComprasComponent } from './components/compras/compras.component';
 import { InicioComponent } from './components/inicio/inicio.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EmployeeComponent } from './components/employee/employee.component';
+import { MaterialModule } from './material/material.module';
+import { EmployeeDetailComponent } from './components/employee/employee-detail/employee-detail.component';
+import { InventoryComponent } from './components/inventory/inventory.component';
+import { InventoryDetailComponent } from './components/inventory/inventory-detail/inventory-detail.component';
+import { PolicyComponent } from './components/policy/policy.component';
+import { PolicyDetailComponent } from './components/policy/policy-detail/policy-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ClientesComponent,
     NavbarComponent,
-    LoginComponent,
-    ArticuloComponent,
-    TiendaComponent,
-    ComprasComponent,
-    InicioComponent
+    InicioComponent,
+    EmployeeComponent,
+    EmployeeDetailComponent,
+    InventoryComponent,
+    InventoryDetailComponent,
+    PolicyComponent,
+    PolicyDetailComponent
   ],
   imports: [
+    MaterialModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

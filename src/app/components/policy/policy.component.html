@@ -1,0 +1,105 @@
+<div class="container mt-4">
+  <h2>Pólizas</h2>
+
+  <div class="mb-3">
+    <h4>Agregar Nueva Póliza</h4>
+    <form (ngSubmit)="addPolicy()" #policyForm="ngForm">
+      <!-- Campos de entrada para la nueva póliza -->
+      <div class="mb-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Empleado</mat-label>
+          <mat-select [(ngModel)]="policy.employeeId" name="employeeId" required>
+            <mat-option *ngFor="let employee of employees" [value]="employee.employeeId">
+              {{ employee.name }} {{ employee.lastName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="mb-3">
+        <mat-form-field appearance="outline">
+          <mat-label>SKU</mat-label>
+          <mat-select [(ngModel)]="policy.sku" name="sku" required>
+            <mat-option *ngFor="let inventoryItem of inventoryItems" [value]="inventoryItem.sku">
+              {{ inventoryItem.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="mb-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Cantidad</mat-label>
+          <input matInput type="number" id="quantity" name="quantity" [(ngModel)]="policy.quantity" required>
+        </mat-form-field>
+      </div>
+
+      <!-- Agrega más campos según la información de la póliza -->
+
+      <button mat-raised-button color="primary" type="submit">Agregar Póliza</button>
+    </form>
+  </div>
+
+  <div class="mt-4">
+    <h4>Listado de Pólizas</h4>
+    <table mat-table [dataSource]="policies" class="mat-elevation-z8">
+      <ng-container matColumnDef="idpoliza">
+        <th mat-header-cell *matHeaderCellDef>ID Póliza</th>
+        <td mat-cell *matCellDef="let policy">{{ policy.poliza.idpoliza }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="cantidad">
+        <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+        <td mat-cell *matCellDef="let policy">
+          <div [ngSwitch]="policy.isEdit">
+            <div *ngSwitchCase="false">{{ policy.poliza.cantidad }}</div>
+            <div *ngSwitchCase="true">
+              <mat-form-field appearance="outline">
+                <input matInput type="number" [(ngModel)]="policy.poliza.cantidad" />
+              </mat-form-field>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombreEmpleado">
+        <th mat-header-cell *matHeaderCellDef>Nombre del Empleado</th>
+        <td mat-cell *matCellDef="let policy">{{ policy.empleado.nombre }} {{ policy.empleado.apellido }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombreArticulo">
+        <th mat-header-cell *matHeaderCellDef>Nombre del Artículo</th>
+        <td mat-cell *matCellDef="let policy">{{ policy.detalleArticulo.nombre }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let policy">
+          <div [ngSwitch]="policy.isEdit">
+            <div *ngSwitchCase="false">
+              <button mat-icon-button color="warn" (click)="updatePolicy(policy)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deletePolicy(policy.poliza.idpoliza)">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="detailPolicy(policy)">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </div>
+            <div *ngSwitchCase="true">
+              <button mat-icon-button color="warn" (click)="doneEditing(policy)">
+                <mat-icon>done</mat-icon>
+              </button>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Agrega más campos según la información de la póliza -->
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>
